@@ -15,4 +15,8 @@ public enum EnumPoint {
         this.score = score;
     }
 
+
+    public String getScore() {
+        return score;
+    }
 }

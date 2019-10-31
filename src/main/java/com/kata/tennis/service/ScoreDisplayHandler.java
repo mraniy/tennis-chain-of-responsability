@@ -1,5 +1,6 @@
 package com.kata.tennis.service;
 
+import com.kata.tennis.model.EnumPoint;
 import com.kata.tennis.model.Match;
 
 import java.util.Arrays;
@@ -21,11 +22,11 @@ public class ScoreDisplayHandler {
             updateScorePointsDisplayed(scoreDisplayed, String.valueOf(numberPointsOfGameWonByPlayer1), String.valueOf(numberPointsOfGameWonByPlayer2));
         }
         else if (isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2) && numberPointsOfGameWonByPlayer1 > numberPointsOfGameWonByPlayer2) {
-            updateScorePointsDisplayed(scoreDisplayed, "AD", "40");
+            updateScorePointsDisplayed(scoreDisplayed, EnumPoint.ADVANTAGE.getScore(), EnumPoint.FORTY.getScore());
         } else if (isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2) && numberPointsOfGameWonByPlayer2 > numberPointsOfGameWonByPlayer1) {
-            updateScorePointsDisplayed(scoreDisplayed, "40", "AD");
+            updateScorePointsDisplayed(scoreDisplayed, EnumPoint.FORTY.getScore(), EnumPoint.ADVANTAGE.getScore());
         } else if (isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2) && numberPointsOfGameWonByPlayer2 == numberPointsOfGameWonByPlayer1) {
-            updateScorePointsDisplayed(scoreDisplayed, "40", "40");
+            updateScorePointsDisplayed(scoreDisplayed, EnumPoint.FORTY.getScore(), EnumPoint.FORTY.getScore());
         } else if (!isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2)) {
             updateScorePointsDisplayed(scoreDisplayed, convertPointNumbersToPointString(numberPointsOfGameWonByPlayer1), convertPointNumbersToPointString(numberPointsOfGameWonByPlayer2));
         }
@@ -62,14 +63,14 @@ public class ScoreDisplayHandler {
 
     private String convertPointNumbersToPointString(int numberPointsOfGameWonByPlayer) {
         if(numberPointsOfGameWonByPlayer == 0) {
-            return "0";
+            return EnumPoint.LOVE.getScore();
         }
         if (numberPointsOfGameWonByPlayer == 1) {
-            return "15";
+            return EnumPoint.FIFTEEN.getScore();
         } else if (numberPointsOfGameWonByPlayer == 2) {
-            return "30";
+            return EnumPoint.THIRTY.getScore();
         } else {
-            return "40";
+            return EnumPoint.FORTY.getScore();
         }
     }
 
