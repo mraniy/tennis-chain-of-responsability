@@ -17,6 +17,7 @@ public class MatchHandler extends UnitScoreHandler {
                 .filter(match1 -> match1.getPlayer2().getName().equals(player.getName()))
                 .filter(match1 -> match1.getScore().getScorePlayer2().getNumberSetWonByPlayer() ==2)
                 .ifPresent(match1 -> match1.setWinner(player.getName()));
+
         return match;
     }
 }

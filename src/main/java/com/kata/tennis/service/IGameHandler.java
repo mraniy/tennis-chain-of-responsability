@@ -7,15 +7,10 @@ public interface IGameHandler {
 
 
     default void incrementTheRightGameOfSet(Match match1, ScorePlayer scorePlayer) {
-        if(match1.getSetNumber() == 1) {
-            int numberGamesWonByPlayer = scorePlayer.getNumberGamesWonByPlayerSet1();
-            scorePlayer.setNumberGamesWonByPlayerSet1(numberGamesWonByPlayer + 1);
-        } else if(match1.getSetNumber() == 2) {
-            int numberGamesWonByPlayer = scorePlayer.getNumberGamesWonByPlayerSet2();
-            scorePlayer.setNumberGamesWonByPlayerSet2(numberGamesWonByPlayer + 1);
-        } else if(match1.getSetNumber() == 3) {
-            int numberGamesWonByPlayer = scorePlayer.getNumberGamesWonByPlayerSet3();
-            scorePlayer.setNumberGamesWonByPlayerSet3(numberGamesWonByPlayer + 1);
+        switch (match1.getSetNumber()) {
+            case 1 : scorePlayer.setNumberGamesWonByPlayerSet1(scorePlayer.getNumberGamesWonByPlayerSet1() + 1); break;
+            case 2 : scorePlayer.setNumberGamesWonByPlayerSet2(scorePlayer.getNumberGamesWonByPlayerSet2() + 1); break;
+            case 3 : scorePlayer.setNumberGamesWonByPlayerSet3(scorePlayer.getNumberGamesWonByPlayerSet3() + 1); break;
         }
     }
 

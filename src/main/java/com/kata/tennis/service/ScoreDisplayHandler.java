@@ -21,9 +21,9 @@ public class ScoreDisplayHandler {
             updateScorePointsDisplayed(scoreDisplayed, String.valueOf(numberPointsOfGameWonByPlayer1), String.valueOf(numberPointsOfGameWonByPlayer2));
         }
         else if (isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2) && numberPointsOfGameWonByPlayer1 > numberPointsOfGameWonByPlayer2) {
-            updateScorePointsDisplayed(scoreDisplayed, "ADV", "40");
+            updateScorePointsDisplayed(scoreDisplayed, "AD", "40");
         } else if (isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2) && numberPointsOfGameWonByPlayer2 > numberPointsOfGameWonByPlayer1) {
-            updateScorePointsDisplayed(scoreDisplayed, "40", "ADV");
+            updateScorePointsDisplayed(scoreDisplayed, "40", "AD");
         } else if (isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2) && numberPointsOfGameWonByPlayer2 == numberPointsOfGameWonByPlayer1) {
             updateScorePointsDisplayed(scoreDisplayed, "40", "40");
         } else if (!isDeuceOrAdvantage(numberPointsOfGameWonByPlayer1, numberPointsOfGameWonByPlayer2)) {

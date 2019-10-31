@@ -13,6 +13,13 @@ public class ScorePlayer {
     private int numberGamesWonByPlayerSet3;
     private int numberSetWonByPlayer;
 
+    public ScorePlayer() {
+        numberPointsOfGameWonByPlayer = 0;
+        numberGamesWonByPlayerSet1 = 0;
+        numberGamesWonByPlayerSet2 = 0;
+        numberGamesWonByPlayerSet3 = 0;
+        numberSetWonByPlayer = 0;
+    }
 
     public int getNumberOfGamesWonsByPlayerForCurrentSet(int currentSet) {
         if(currentSet ==1) return numberGamesWonByPlayerSet1;

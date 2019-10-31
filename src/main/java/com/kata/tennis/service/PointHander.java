@@ -8,6 +8,10 @@ import java.util.Optional;
 
 public class PointHander extends UnitScoreHandler {
 
+    public PointHander() {
+        next = new GameHandler();
+    }
+
     @Override
     public Match refreshScore(Match match, Player player) {
         return Optional.ofNullable(match)

@@ -7,8 +7,9 @@ import com.kata.tennis.model.ScorePlayer;
 import java.util.Optional;
 
 public class SetHandler extends UnitScoreHandler {
-
-
+    public SetHandler() {
+        next = new MatchHandler();
+    }
 
     private void incrementSetNumber(Match match) {
         match.setSetNumber(match.getSetNumber()+1);
