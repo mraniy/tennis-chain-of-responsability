@@ -44,8 +44,8 @@ public class TestScoreDisplayHandler {
         // then
         assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0), is(4));
         assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0), is(3));
-        assertThat(scoreDisplayed.getPointsWonByPlayer1(), is("40"));
-        assertThat(scoreDisplayed.getPointsWonByPlayer2(), is("40"));
+        assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.FORTY.getScore()));
+        assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FORTY.getScore()));
     }
 
     @Test
