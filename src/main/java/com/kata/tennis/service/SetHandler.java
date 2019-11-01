@@ -5,14 +5,15 @@ import com.kata.tennis.model.Player;
 import com.kata.tennis.model.ScorePlayer;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SetHandler extends UnitScoreHandler {
     public SetHandler() {
-        next = new MatchHandler();
+        next = Optional.of(new MatchHandler());
     }
 
     private void incrementSetNumber(Match match) {
-        match.setSetNumber(match.getSetNumber()+1);
+        match.setSetNumber(new AtomicInteger(match.getSetNumber()).incrementAndGet());
     }
 
     @Override
@@ -27,9 +28,8 @@ public class SetHandler extends UnitScoreHandler {
                 .filter(match1 -> match1.getPlayer1().getName().equals(player.getName()))
                 .filter(match1 -> hasPlayer1WonSet(match ,match1.getScore().getScorePlayer1(), match1.getScore().getScorePlayer2()))
                 .ifPresent(match1 -> {
-                    int numberSetWonByPlayer = match1.getScore().getScorePlayer1().getNumberSetWonByPlayer();
-                    match1.getScore().getScorePlayer1().setNumberSetWonByPlayer(numberSetWonByPlayer+1);
-                    incrementSetNumber(match);
+                    match1.getScore().getScorePlayer1().setNumberSetWonByPlayer(new AtomicInteger( match1.getScore().getScorePlayer1().getNumberSetWonByPlayer()).incrementAndGet());
+                    incrementSetNumber(match1);
                 });
     }
 
@@ -39,9 +39,8 @@ public class SetHandler extends UnitScoreHandler {
                 .filter(match1 -> match1.getPlayer2().getName().equals(player.getName()))
                 .filter(match1 -> hasPlayer1WonSet(match, match1.getScore().getScorePlayer2(), match1.getScore().getScorePlayer1()))
                 .ifPresent(match1 -> {
-                    int numberSetWonByPlayer = match1.getScore().getScorePlayer2().getNumberSetWonByPlayer();
-                    match1.getScore().getScorePlayer2().setNumberSetWonByPlayer(numberSetWonByPlayer+1);
-                    incrementSetNumber(match);
+                    match1.getScore().getScorePlayer2().setNumberSetWonByPlayer(new AtomicInteger( match1.getScore().getScorePlayer2().getNumberSetWonByPlayer()).incrementAndGet());
+                    incrementSetNumber(match1);
                 });
     }
 

@@ -3,14 +3,16 @@ package com.kata.tennis.service;
 import com.kata.tennis.model.Match;
 import com.kata.tennis.model.ScorePlayer;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public interface IGameHandler {
 
 
     default void incrementTheRightGameOfSet(Match match1, ScorePlayer scorePlayer) {
         switch (match1.getSetNumber()) {
-            case 1 : scorePlayer.setNumberGamesWonByPlayerSet1(scorePlayer.getNumberGamesWonByPlayerSet1() + 1); break;
-            case 2 : scorePlayer.setNumberGamesWonByPlayerSet2(scorePlayer.getNumberGamesWonByPlayerSet2() + 1); break;
-            case 3 : scorePlayer.setNumberGamesWonByPlayerSet3(scorePlayer.getNumberGamesWonByPlayerSet3() + 1); break;
+            case 1 : scorePlayer.setNumberGamesWonByPlayerSet1(new AtomicInteger(scorePlayer.getNumberGamesWonByPlayerSet1()).incrementAndGet()); break;
+            case 2 : scorePlayer.setNumberGamesWonByPlayerSet2(new AtomicInteger(scorePlayer.getNumberGamesWonByPlayerSet2()).incrementAndGet()); break;
+            case 3 : scorePlayer.setNumberGamesWonByPlayerSet3(new AtomicInteger(scorePlayer.getNumberGamesWonByPlayerSet3()).incrementAndGet()); break;
         }
     }
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class GameHandler extends UnitScoreHandler implements IGameHandler {
     public GameHandler() {
-        next = new TieBreakHandler();
+        next = Optional.of(new TieBreakHandler());
     }
 
     private final int LIMITTOWINTOGAME = 4;

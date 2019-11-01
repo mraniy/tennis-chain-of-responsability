@@ -5,11 +5,12 @@ import com.kata.tennis.model.Player;
 import com.kata.tennis.model.ScorePlayer;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PointHander extends UnitScoreHandler {
 
     public PointHander() {
-        next = new GameHandler();
+        next = Optional.of(new GameHandler());
     }
 
     @Override
@@ -21,10 +22,8 @@ public class PointHander extends UnitScoreHandler {
                 .orElseGet(() -> updateScore(match, match.getScore().getScorePlayer2()));
     }
 
-    private Match updateScore(Match match, ScorePlayer scorePlayer1) {
-        int numberPointsOfGameWonByPlayer = scorePlayer1.getNumberPointsOfGameWonByPlayer();
-        int numberPointsOfGameWonByPlayer1 = numberPointsOfGameWonByPlayer + 1;
-        scorePlayer1.setNumberPointsOfGameWonByPlayer(numberPointsOfGameWonByPlayer1);
+    private Match updateScore(Match match, ScorePlayer scorePlayer) {
+        scorePlayer.setNumberPointsOfGameWonByPlayer(new AtomicInteger(scorePlayer.getNumberPointsOfGameWonByPlayer()).incrementAndGet());
         return match;
     }
 

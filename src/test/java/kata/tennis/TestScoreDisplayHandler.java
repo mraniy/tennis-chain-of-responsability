@@ -1,11 +1,8 @@
 package kata.tennis;
 
-import com.kata.tennis.model.Match;
-import com.kata.tennis.model.Player;
-import com.kata.tennis.model.Score;
-import com.kata.tennis.model.ScorePlayer;
+import com.kata.tennis.model.*;
 import com.kata.tennis.service.ScoreDisplayHandler;
-import com.kata.tennis.service.ScoreDisplayed;
+import com.kata.tennis.model.ScoreDisplayed;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -28,8 +25,8 @@ public class TestScoreDisplayHandler {
         // then
         assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0), is(4));
         assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0), is(3));
-        assertThat(scoreDisplayed.getPointsWonByPlayer1(), is("ADV"));
-        assertThat(scoreDisplayed.getPointsWonByPlayer2(), is("40"));
+        assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.ADVANTAGE.getScore()));
+        assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FORTY.getScore()));
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.kata.tennis.service;
+package com.kata.tennis.model;
 
 import lombok.Data;
 

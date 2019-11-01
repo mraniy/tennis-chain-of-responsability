@@ -4,10 +4,12 @@ import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
 import lombok.Data;
 
+import java.util.Optional;
+
 @Data
 public abstract class UnitScoreHandler {
 
-    protected UnitScoreHandler next;
+    protected Optional<UnitScoreHandler> next;
 
     public abstract Match refreshScore(Match match, Player player);
 
@@ -17,9 +19,6 @@ public abstract class UnitScoreHandler {
         else {
             refreshScore(match, match.getPlayer2());
         }
-        if (next != null) {
-            next.proceed(match, pointWinner);
-        }
-
+        next.ifPresent(unitScoreHandler -> unitScoreHandler.proceed(match,pointWinner));
     }
 }

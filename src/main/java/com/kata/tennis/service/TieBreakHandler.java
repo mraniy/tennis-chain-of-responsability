@@ -8,7 +8,7 @@ import java.util.Optional;
 public class TieBreakHandler extends UnitScoreHandler implements IGameHandler {
 
     public TieBreakHandler() {
-        next = new SetHandler();
+        next = Optional.of(new SetHandler());
     }
 
     private final int LIMITTOWINTOGAME = 7;

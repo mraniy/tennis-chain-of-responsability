@@ -8,6 +8,8 @@ import com.kata.tennis.service.MatchHandler;
 import com.kata.tennis.service.UnitScoreHandler;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -26,7 +28,7 @@ public class TestMatchHandler {
         UnitScoreHandler matchHandler = new MatchHandler();
         Match matchAfterRefresh = matchHandler.refreshScore(match, federer);
         // then
-        assertThat(matchAfterRefresh.getWinner(), is("Federer"));
+        assertThat(matchAfterRefresh.getWinner(), is(Optional.of("Federer")));
     }
 
 
@@ -45,6 +47,6 @@ public class TestMatchHandler {
         UnitScoreHandler matchHandler = new MatchHandler();
         Match matchAfterRefresh = matchHandler.refreshScore(match, nadal);
         // then
-        assertThat(matchAfterRefresh.getWinner(), is("Nadal"));
+        assertThat(matchAfterRefresh.getWinner(), is(Optional.of("Nadal")));
     }
 }

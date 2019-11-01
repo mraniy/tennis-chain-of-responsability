@@ -4,30 +4,19 @@ import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
 import com.kata.tennis.model.Score;
 import com.kata.tennis.model.ScorePlayer;
-import com.kata.tennis.service.*;
-import org.junit.Before;
+import com.kata.tennis.service.PointHander;
+import com.kata.tennis.service.UnitScoreHandler;
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.is;
+import java.util.Optional;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 
 public class TestUnitScoreHandler {
 
     UnitScoreHandler pointHandler = new PointHander();
-    UnitScoreHandler gameHandler = new GameHandler();
-    UnitScoreHandler tieBreakHandler = new TieBreakHandler();
-    UnitScoreHandler setHandler = new SetHandler();
-    UnitScoreHandler MatchHandler = new MatchHandler();
-
-    @Before
-    public void setUp() {
-        pointHandler.setNext(gameHandler);
-        gameHandler.setNext(tieBreakHandler);
-        tieBreakHandler.setNext(setHandler);
-        setHandler.setNext(MatchHandler);
-
-    }
 
     @Test
     public void should_determine_match_winner_correctly() {
@@ -44,7 +33,7 @@ public class TestUnitScoreHandler {
 
         pointHandler.proceed(match, "Federer");
         // then
-        assertThat(match.getWinner() , is("Federer"));
+        assertThat(match.getWinner() , is(Optional.of("Federer")));
     }
 
     @Test

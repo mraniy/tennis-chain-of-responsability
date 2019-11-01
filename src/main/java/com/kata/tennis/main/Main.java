@@ -4,26 +4,32 @@ import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
 import com.kata.tennis.model.Score;
 import com.kata.tennis.model.ScorePlayer;
-import com.kata.tennis.service.*;
+import com.kata.tennis.service.PointHander;
+import com.kata.tennis.service.ScoreDisplayHandler;
+import com.kata.tennis.model.ScoreDisplayed;
+import com.kata.tennis.service.UnitScoreHandler;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.kata.tennis.util.StringUtils.getLineOfScoreByPlayer;
+import static com.kata.tennis.util.StringUtils.retrieveUnitsOfGameWonBySomePlayer;
 
 public class Main {
 
     static UnitScoreHandler pointHandler = new PointHander();
-    static ScoreDisplayHandler displayHandler= new ScoreDisplayHandler();
+    static ScoreDisplayHandler displayHandler = new ScoreDisplayHandler();
 
     public static void main(String[] args) {
+        AtomicInteger numberOfPointsPlayed = new AtomicInteger();
         Player federer = new Player("Federer");
         Player nadal = new Player("Nadal");
         Match match = new Match(federer, nadal, new Score(new ScorePlayer(), new ScorePlayer()));
-        while(match.getWinner() == null) {
+        for (;!match.getWinner().isPresent(); numberOfPointsPlayed.incrementAndGet()) {
             generatePointAndGiveItToRandomPlayer(match);
             ScoreDisplayed scoreDisplayed = displayHandler.show(match);
             displayScore(scoreDisplayed, federer, nadal);
         }
+        System.out.println("number of points generated randomly : " + numberOfPointsPlayed);
     }
 
     private static void displayScore(ScoreDisplayed scoreDisplayed, Player federer, Player nadal) {
@@ -31,29 +37,27 @@ public class Main {
         String player1Sets = retrieveUnitsOfGameWonBySomePlayer(scoreDisplayed.getSetsWonByPlayer1());
         String player2Games = retrieveUnitsOfGameWonBySomePlayer(scoreDisplayed.getGamesWonByPlayer2());
         String player2Sets = retrieveUnitsOfGameWonBySomePlayer(scoreDisplayed.getSetsWonByPlayer2());
-        String strFederer = federer.getName() +"--------"+ scoreDisplayed.getPointsWonByPlayer1()+ "---------------"
-                + player1Games + "-------"
-                + player1Sets;
-        String strNadal = nadal.getName() + "----------"+ scoreDisplayed.getPointsWonByPlayer2() + "---------------"
-                + player2Games + "-------"
-                + player2Sets;
+        String strFederer = getLineOfScoreByPlayer(scoreDisplayed.getPointsWonByPlayer1(), federer, player1Games, player1Sets);
+        String strNadal = getLineOfScoreByPlayer(scoreDisplayed.getPointsWonByPlayer2(), nadal, player2Games, player2Sets);
+        showScoreOfPlayers(strFederer, strNadal);
+    }
+
+    private static void showScoreOfPlayers(String strFederer, String strNadal) {
         System.out.println(strFederer);
         System.out.println(strNadal);
         System.out.println();
     }
 
-    private static String retrieveUnitsOfGameWonBySomePlayer(List<Integer> gamesWonByPlayer) {
-        return gamesWonByPlayer.stream()
-                .map(integer -> String.valueOf(integer))
-                .collect(Collectors.joining("----------"));
-    }
 
     private static void generatePointAndGiveItToRandomPlayer(Match match) {
         long randomwinner = Math.round(Math.random());
-        if(randomwinner == 0l) {
-            pointHandler.proceed(match, "Federer");
-        } else {
-            pointHandler.proceed(match, "Nadal");
+        switch (String.valueOf(randomwinner)) {
+            case "0":
+                pointHandler.proceed(match, "Federer");
+                break;
+            default:
+                pointHandler.proceed(match, "Nadal");
+                break;
         }
     }
 }

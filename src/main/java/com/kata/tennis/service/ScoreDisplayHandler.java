@@ -2,6 +2,7 @@ package com.kata.tennis.service;
 
 import com.kata.tennis.model.EnumPoint;
 import com.kata.tennis.model.Match;
+import com.kata.tennis.model.ScoreDisplayed;
 
 import java.util.Arrays;
 
