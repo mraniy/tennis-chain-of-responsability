@@ -26,7 +26,7 @@ public class SetHandler extends UnitScoreHandler {
     private void incrementNumberOfSetsOfPlayer1IfHeWinTheSet(Match match, Player player) {
         Optional.ofNullable(match)
                 .filter(match1 -> match1.getPlayer1().getName().equals(player.getName()))
-                .filter(match1 -> hasPlayer1WonSet(match ,match1.getScore().getScorePlayer1(), match1.getScore().getScorePlayer2()))
+                .filter(match1 -> hasPlayerWonSet(match ,match1.getScore().getScorePlayer1(), match1.getScore().getScorePlayer2()))
                 .ifPresent(match1 -> {
                     match1.getScore().getScorePlayer1().setNumberSetWonByPlayer(new AtomicInteger( match1.getScore().getScorePlayer1().getNumberSetWonByPlayer()).incrementAndGet());
                     incrementSetNumber(match1);
@@ -37,14 +37,14 @@ public class SetHandler extends UnitScoreHandler {
     private void incrementNumberOfSetsOfPlayer2IfHeWinTheSet(Match match, Player player) {
         Optional.ofNullable(match)
                 .filter(match1 -> match1.getPlayer2().getName().equals(player.getName()))
-                .filter(match1 -> hasPlayer1WonSet(match, match1.getScore().getScorePlayer2(), match1.getScore().getScorePlayer1()))
+                .filter(match1 -> hasPlayerWonSet(match, match1.getScore().getScorePlayer2(), match1.getScore().getScorePlayer1()))
                 .ifPresent(match1 -> {
                     match1.getScore().getScorePlayer2().setNumberSetWonByPlayer(new AtomicInteger( match1.getScore().getScorePlayer2().getNumberSetWonByPlayer()).incrementAndGet());
                     incrementSetNumber(match1);
                 });
     }
 
-    private boolean hasPlayer1WonSet(Match match,ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
+    private boolean hasPlayerWonSet(Match match, ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
         return hasPlayer1WonTieBreak(match, scorePlayer1, scorePlayer2) ||
                 hasPlayer1WonUsualSet(match, scorePlayer1, scorePlayer2);
     }
