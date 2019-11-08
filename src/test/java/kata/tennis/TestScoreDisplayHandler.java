@@ -5,6 +5,9 @@ import com.kata.tennis.service.ScoreDisplayHandler;
 import com.kata.tennis.model.ScoreDisplayed;
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static kata.tennis.DataFactory.aScore;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -15,16 +18,17 @@ public class TestScoreDisplayHandler {
         // given
         Player federer = new Player("Federer");
         Player nadal = new Player("Nadal");
-        ScorePlayer scoreFederer = new ScorePlayer(7, 4, 0,0,1);
-        ScorePlayer scoreNadal = new ScorePlayer(6, 3,0,0, 1);
+        ScorePlayer scoreFederer =  aScore(7, 1, new AtomicInteger(4));
+        ScorePlayer scoreNadal = aScore(6, 1, new AtomicInteger(3));
+
         Score score = new Score(scoreFederer, scoreNadal);
         Match match = new Match(federer, nadal, score);
         // when
         ScoreDisplayHandler scoreDisplayHandler = new ScoreDisplayHandler();
         ScoreDisplayed scoreDisplayed = scoreDisplayHandler.show(match);
         // then
-        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0), is(4));
-        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0), is(3));
+        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).get(), is(4));
+        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).get(), is(3));
         assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.ADVANTAGE.getScore()));
         assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FORTY.getScore()));
     }
@@ -34,16 +38,17 @@ public class TestScoreDisplayHandler {
         // given
         Player federer = new Player("Federer");
         Player nadal = new Player("Nadal");
-        ScorePlayer scoreFederer = new ScorePlayer(9, 4,0,0, 1);
-        ScorePlayer scoreNadal = new ScorePlayer(9, 3,0,0, 1);
+        ScorePlayer scoreFederer = aScore(9, 1, new AtomicInteger(4));
+        ScorePlayer scoreNadal = aScore(9, 1, new AtomicInteger(3));
+
         Score score = new Score(scoreFederer, scoreNadal);
         Match match = new Match(federer, nadal, score);
         // when
         ScoreDisplayHandler scoreDisplayHandler = new ScoreDisplayHandler();
         ScoreDisplayed scoreDisplayed = scoreDisplayHandler.show(match);
         // then
-        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0), is(4));
-        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0), is(3));
+        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).get(), is(4));
+        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).get(), is(3));
         assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.FORTY.getScore()));
         assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FORTY.getScore()));
     }
@@ -53,17 +58,18 @@ public class TestScoreDisplayHandler {
         // given
         Player federer = new Player("Federer");
         Player nadal = new Player("Nadal");
-        ScorePlayer scoreFederer = new ScorePlayer(3, 4,0,0, 1);
-        ScorePlayer scoreNadal = new ScorePlayer(1, 3,0,0, 1);
+        ScorePlayer scoreFederer = aScore(3, 1, new AtomicInteger(4));
+        ScorePlayer scoreNadal = aScore(1, 1, new AtomicInteger(3));
+
         Score score = new Score(scoreFederer, scoreNadal);
         Match match = new Match(federer, nadal, score);
         // when
         ScoreDisplayHandler scoreDisplayHandler = new ScoreDisplayHandler();
         ScoreDisplayed scoreDisplayed = scoreDisplayHandler.show(match);
         // then
-        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0), is(4));
-        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0), is(3));
-        assertThat(scoreDisplayed.getPointsWonByPlayer1(), is("40"));
-        assertThat(scoreDisplayed.getPointsWonByPlayer2(), is("15"));
+        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).get(), is(4));
+        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).get(), is(3));
+        assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.FORTY.getScore()));
+        assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FIFTEEN.getScore()));
     }
 }

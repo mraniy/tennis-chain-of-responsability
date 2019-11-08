@@ -2,7 +2,9 @@ package com.kata.tennis.util;
 
 import com.kata.tennis.model.Player;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,9 +23,9 @@ public class StringUtils {
         return nameCompletedBySpaces.toString();
     }
 
-    public static String retrieveUnitsOfGameWonBySomePlayer(List<Integer> gamesWonByPlayer) {
+    public static String retrieveUnitsOfGameWonBySomePlayer(LinkedList<AtomicInteger> gamesWonByPlayer) {
         return gamesWonByPlayer.stream()
-                .map(integer -> String.valueOf(integer))
+                .map(integer -> String.valueOf(integer.get()))
                 .collect(Collectors.joining(" "));
     }
 }

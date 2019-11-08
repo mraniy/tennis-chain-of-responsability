@@ -2,18 +2,20 @@ package com.kata.tennis.model;
 
 import lombok.Data;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
 public class ScoreDisplayed {
 
-    private List<Integer> gamesWonByPlayer1;
+    private LinkedList<AtomicInteger> gamesWonByPlayer1;
 
-    private List<Integer> gamesWonByPlayer2;
+    private LinkedList<AtomicInteger> gamesWonByPlayer2;
 
-    private List<Integer> setsWonByPlayer1;
+    private LinkedList<AtomicInteger> setsWonByPlayer1;
 
-    private List<Integer> setsWonByPlayer2;
+    private LinkedList<AtomicInteger> setsWonByPlayer2;
 
     private String pointsWonByPlayer1;
 

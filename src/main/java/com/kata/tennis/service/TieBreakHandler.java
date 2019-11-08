@@ -16,8 +16,8 @@ public class TieBreakHandler extends UnitScoreHandler implements IGameHandler {
 
     @Override
     public Match refreshScore(Match match, Player player) {
-        if (match.getScore().getScorePlayer1().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()) == 6
-                && match.getScore().getScorePlayer2().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()) == 6) {
+        if (match.getScore().getScorePlayer1().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6
+                && match.getScore().getScorePlayer2().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6) {
             incrementGamesOfPlayer1IfHeWinTheGame(match, player);
             incrementGamesOfPlayer2IfHeWinTheGame(match, player);
         }
@@ -29,7 +29,7 @@ public class TieBreakHandler extends UnitScoreHandler implements IGameHandler {
                 .filter(match1 -> match1.getPlayer2().getName().equals(player.getName()))
                 .filter(match11 -> gameWonBySomePlayer(match11.getScore().getScorePlayer2(), match11.getScore().getScorePlayer1(), LIMITTOWINTOGAME, LIMITMINTOLOSETHEGAME))
                 .ifPresent(match1 -> {
-                            incrementTheRightGameOfSet(match1, match1.getScore().getScorePlayer2());
+                            incrementTheRightGameOfSet(match1.getScore().getScorePlayer2());
                             setPointsToZero(match);
                         }
                 );
@@ -40,7 +40,7 @@ public class TieBreakHandler extends UnitScoreHandler implements IGameHandler {
                 .filter(match1 -> match1.getPlayer1().getName().equals(player.getName()))
                 .filter(match11 -> gameWonBySomePlayer(match11.getScore().getScorePlayer1(), match11.getScore().getScorePlayer2(), LIMITTOWINTOGAME, LIMITMINTOLOSETHEGAME))
                 .ifPresent(match1 -> {
-                            incrementTheRightGameOfSet(match1, match1.getScore().getScorePlayer1());
+                            incrementTheRightGameOfSet(match1.getScore().getScorePlayer1());
                             setPointsToZero(match);
                         }
                 );

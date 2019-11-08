@@ -3,29 +3,36 @@ package com.kata.tennis.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Data
 @AllArgsConstructor
 public class ScorePlayer {
 
     private int numberPointsOfGameWonByPlayer;
-    private int numberGamesWonByPlayerSet1;
-    private int numberGamesWonByPlayerSet2;
-    private int numberGamesWonByPlayerSet3;
+    private LinkedList<AtomicInteger> numberGamesWonByPlayerBySet;
+
     private int numberSetWonByPlayer;
 
     public ScorePlayer() {
         numberPointsOfGameWonByPlayer = 0;
-        numberGamesWonByPlayerSet1 = 0;
-        numberGamesWonByPlayerSet2 = 0;
-        numberGamesWonByPlayerSet3 = 0;
+        numberGamesWonByPlayerBySet = new LinkedList<>();
+        numberGamesWonByPlayerBySet.add(new AtomicInteger(0));
         numberSetWonByPlayer = 0;
     }
 
-    public int getNumberOfGamesWonsByPlayerForCurrentSet(int currentSet) {
-        if(currentSet ==1) return numberGamesWonByPlayerSet1;
-        else if(currentSet == 2) return numberGamesWonByPlayerSet2;
-        else return numberGamesWonByPlayerSet3;
-
+    public AtomicInteger getNumberOfGamesWonsByPlayerForCurrentSet(int currentSet) {
+        AtomicInteger atomicInteger= null;
+        try {
+             atomicInteger = numberGamesWonByPlayerBySet.get(currentSet - 1);
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println(currentSet);
+            e.printStackTrace();
+        }
+        return atomicInteger;
     }
 
 }

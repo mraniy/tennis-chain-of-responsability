@@ -14,6 +14,8 @@ public class SetHandler extends UnitScoreHandler {
 
     private void incrementSetNumber(Match match) {
         match.setSetNumber(new AtomicInteger(match.getSetNumber()).incrementAndGet());
+        match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().add(new AtomicInteger(0));
+        match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().add(new AtomicInteger(0));
     }
 
     @Override
@@ -50,8 +52,8 @@ public class SetHandler extends UnitScoreHandler {
     }
 
     private boolean hasPlayer1WonUsualSet(Match match, ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
-        int numberGamesWonByPlayer1 = scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber());
-        int numberGamesWonByPlayer2 = scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber());
+        int numberGamesWonByPlayer1 = scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get();
+        int numberGamesWonByPlayer2 = scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get();
         int differenceOfPointsBetweenPlayer1AndPlayer2 = numberGamesWonByPlayer1 - numberGamesWonByPlayer2;
         if ((numberGamesWonByPlayer1 == 6 || numberGamesWonByPlayer1 == 7)
                 && differenceOfPointsBetweenPlayer1AndPlayer2 >= 2)
@@ -60,8 +62,8 @@ public class SetHandler extends UnitScoreHandler {
     }
 
     private boolean hasPlayer1WonTieBreak(Match match , ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
-        return scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()) == 7
-                && scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()) == 6;
+        return scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 7
+                && scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6;
     }
 
 

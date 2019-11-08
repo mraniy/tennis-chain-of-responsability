@@ -9,7 +9,9 @@ import com.kata.tennis.service.UnitScoreHandler;
 import org.junit.Test;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import static kata.tennis.DataFactory.aScore;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -20,8 +22,10 @@ public class TestMatchHandler {
         // given
         Player federer = new Player("Federer");
         Player nadal = new Player("Nadal");
-        ScorePlayer scoreFederer = new ScorePlayer(0, 0,0,0, 2);
-        ScorePlayer scoreNadal = new ScorePlayer(0, 0, 0,0,1);
+
+        ScorePlayer scoreFederer = aScore(0, 2, new AtomicInteger(0));
+        ScorePlayer scoreNadal = aScore(0, 1, new AtomicInteger(0));
+
         Score score = new Score(scoreFederer, scoreNadal);
         Match match = new Match(federer, nadal, score);
         // when
@@ -39,8 +43,9 @@ public class TestMatchHandler {
         Player federer = new Player("Federer");
         Player nadal = new Player("Nadal");
 
-        ScorePlayer scoreFederer = new ScorePlayer(0, 0,0,0, 0);
-        ScorePlayer scoreNadal = new ScorePlayer(0, 0,0,0, 2);
+        ScorePlayer scoreFederer = aScore(0, 0, new AtomicInteger(0));
+        ScorePlayer scoreNadal = aScore(0, 2, new AtomicInteger(0));
+
         Score score = new Score(scoreFederer, scoreNadal);
         Match match = new Match(federer, nadal, score);
         // when
