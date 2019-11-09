@@ -32,15 +32,18 @@ public class StringUtils {
 
     public static String retrieveUnitsOfGamesWonBySomePlayer(LinkedList<GamesAndMaybeTieBreakPoints> gamesWonByPlayer) {
         return gamesWonByPlayer.stream()
-                .map(gamesAndMaybeTieBreakPoints -> {
-                    String tieBreakPoints = gamesAndMaybeTieBreakPoints.getTieBreakPoints().map(atomicInteger -> String.valueOf(atomicInteger.get())).orElseGet(() -> "");
-                    int intGames = gamesAndMaybeTieBreakPoints.getGames().get();
-                    StringBuffer games = new StringBuffer(String.valueOf(intGames));
-                    if(!tieBreakPoints.isEmpty()) {
-                        games.append("(").append(tieBreakPoints).append(")");
-                    }
-                    return games.toString();
-                }).collect(Collectors.joining(" "));
+                .map(StringUtils::getScoreOfGame)
+                .collect(Collectors.joining(" "));
 
+    }
+
+    public static String getScoreOfGame(GamesAndMaybeTieBreakPoints gamesAndMaybeTieBreakPoints) {
+        String tieBreakPoints = gamesAndMaybeTieBreakPoints.getTieBreakPoints().map(atomicInteger -> String.valueOf(atomicInteger.get())).orElseGet(() -> "");
+        int intGames = gamesAndMaybeTieBreakPoints.getGames().get();
+        StringBuffer games = new StringBuffer(String.valueOf(intGames));
+        if(!tieBreakPoints.isEmpty()) {
+            games.append("(").append(tieBreakPoints).append(")");
+        }
+        return games.toString();
     }
 }
