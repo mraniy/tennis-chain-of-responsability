@@ -30,9 +30,9 @@ public class TestMatchHandler {
         Match match = new Match(federer, nadal, score);
         // when
         UnitScoreHandler matchHandler = new MatchHandler();
-        Match matchAfterRefresh = matchHandler.refreshScore(match, federer);
+        matchHandler.refreshScore(match, federer);
         // then
-        assertThat(matchAfterRefresh.getWinner(), is(Optional.of("Federer")));
+        assertThat(match.getWinner(), is(Optional.of("Federer")));
     }
 
 
@@ -50,8 +50,8 @@ public class TestMatchHandler {
         Match match = new Match(federer, nadal, score);
         // when
         UnitScoreHandler matchHandler = new MatchHandler();
-        Match matchAfterRefresh = matchHandler.refreshScore(match, nadal);
+        matchHandler.refreshScore(match, nadal);
         // then
-        assertThat(matchAfterRefresh.getWinner(), is(Optional.of("Nadal")));
+        assertThat(match.getWinner(), is(Optional.of("Nadal")));
     }
 }

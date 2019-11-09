@@ -11,7 +11,7 @@ public abstract class UnitScoreHandler {
 
     protected Optional<UnitScoreHandler> next;
 
-    public abstract Match refreshScore(Match match, Player player);
+    public abstract void refreshScore(Match match, Player player);
 
     public void proceed(Match match, String pointWinner) {
         if (pointWinner.equals(match.getPlayer1().getName()))

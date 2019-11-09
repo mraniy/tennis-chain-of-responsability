@@ -33,8 +33,8 @@ public class TestPointHandler {
         Match match = new Match(federer, nadal,score);
         // when
         UnitScoreHandler pointHandler = new PointHander();
-        Match matchAfterRefresh = pointHandler.refreshScore(match, federer);
+        pointHandler.refreshScore(match, federer);
         // then
-        assertThat(matchAfterRefresh.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(2));
+        assertThat(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(2));
     }
 }

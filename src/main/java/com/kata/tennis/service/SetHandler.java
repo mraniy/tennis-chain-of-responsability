@@ -19,10 +19,9 @@ public class SetHandler extends UnitScoreHandler {
     }
 
     @Override
-    public Match refreshScore(Match match, Player player) {
+    public void refreshScore(Match match, Player player) {
         handleSetWinner(match, player, match.getPlayer1(), match.getScore().getScorePlayer1(), match.getScore().getScorePlayer2());
         handleSetWinner(match, player, match.getPlayer2(), match.getScore().getScorePlayer2(), match.getScore().getScorePlayer1());
-        return match;
     }
 
     public void handleSetWinner(Match match, Player player1, Player player, ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {

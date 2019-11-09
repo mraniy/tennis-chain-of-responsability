@@ -14,11 +14,10 @@ public class MatchHandler extends UnitScoreHandler {
     }
 
     @Override
-    public Match refreshScore(Match match, Player player) {
+    public void refreshScore(Match match, Player player) {
         if(hasPlayer2WonTheMatch(match, player) || hasPlayer1WonTheMatch(match, player)) {
             setWinner(player,match);
         }
-        return match;
     }
 
     private boolean hasPlayer1WonTheMatch(Match match, Player player) {

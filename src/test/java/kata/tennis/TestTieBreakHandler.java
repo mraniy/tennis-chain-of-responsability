@@ -31,11 +31,11 @@ public class TestTieBreakHandler {
         Match match = new Match(federer, nadal, score);
         // when
         UnitScoreHandler gameHandler = new TieBreakHandler();
-        Match matchAfterRefresh = gameHandler.refreshScore(match, nadal);
+        gameHandler.refreshScore(match, nadal);
         // then
-        assertThat(matchAfterRefresh.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().get(0).get(), is(7));
-        assertThat(matchAfterRefresh.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(0));
-        assertThat(matchAfterRefresh.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer(), is(0));
+        assertThat(match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().get(0).get(), is(7));
+        assertThat(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(0));
+        assertThat(match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer(), is(0));
     }
 
     @Test
@@ -52,10 +52,10 @@ public class TestTieBreakHandler {
         Match match = new Match(federer, nadal, score);
         // when
         UnitScoreHandler gameHandler = new TieBreakHandler();
-        Match matchAfterRefresh = gameHandler.refreshScore(match, federer);
+        gameHandler.refreshScore(match, federer);
         // then
-        assertThat(matchAfterRefresh.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().get(0).get(), is(7));
-        assertThat(matchAfterRefresh.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(0));
-        assertThat(matchAfterRefresh.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer(), is(0));
+        assertThat(match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().get(0).get(), is(7));
+        assertThat(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(0));
+        assertThat(match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer(), is(0));
     }
 }

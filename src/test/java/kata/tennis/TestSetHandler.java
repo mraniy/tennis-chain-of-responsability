@@ -28,9 +28,9 @@ public class TestSetHandler {
         Match match = new Match(federer, nadal, score);
         // when
         UnitScoreHandler setHandler = new SetHandler();
-        Match matchAfterRefresh = setHandler.refreshScore(match, nadal);
+        setHandler.refreshScore(match, nadal);
         // then
-        assertThat(matchAfterRefresh.getScore().getScorePlayer2().getNumberSetWonByPlayer(), is(2));
+        assertThat(match.getScore().getScorePlayer2().getNumberSetWonByPlayer(), is(2));
     }
 
     @Test
@@ -45,8 +45,8 @@ public class TestSetHandler {
         Match match = new Match(federer, nadal, score);
         // when
         UnitScoreHandler setHandler = new SetHandler();
-        Match matchAfterRefresh = setHandler.refreshScore(match, federer);
+        setHandler.refreshScore(match, federer);
         // then
-        assertThat(matchAfterRefresh.getScore().getScorePlayer1().getNumberSetWonByPlayer(), is(2));
+        assertThat(match.getScore().getScorePlayer1().getNumberSetWonByPlayer(), is(2));
     }
 }

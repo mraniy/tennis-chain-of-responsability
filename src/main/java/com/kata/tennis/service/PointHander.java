@@ -14,12 +14,12 @@ public class PointHander extends UnitScoreHandler {
     }
 
     @Override
-    public Match refreshScore(Match match, Player player) {
-        return Optional.ofNullable(match)
-                .filter(match1 -> match1.getPlayer1().getName().equals(player.getName()))
-                .map(match1 ->
-                        updateScore(match, match.getScore().getScorePlayer1()))
-                .orElseGet(() -> updateScore(match, match.getScore().getScorePlayer2()));
+    public void refreshScore(Match match, Player player) {
+        if(match.getPlayer1().getName().equals(player.getName())) {
+            updateScore(match, match.getScore().getScorePlayer1());
+        } else {
+            updateScore(match, match.getScore().getScorePlayer2());
+        }
     }
 
     private Match updateScore(Match match, ScorePlayer scorePlayer) {

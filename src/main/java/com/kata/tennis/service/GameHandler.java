@@ -14,10 +14,9 @@ public class GameHandler extends UnitScoreHandler implements IGameHandler {
 
 
     @Override
-    public Match refreshScore(Match match, Player player) {
+    public void refreshScore(Match match, Player player) {
         if (!itsATieBreak(match))
             incrementGamesIfSomePlayerWinsTheMatch(match, player, LIMITTOWINTOGAME);
-        return match;
     }
 
 }
