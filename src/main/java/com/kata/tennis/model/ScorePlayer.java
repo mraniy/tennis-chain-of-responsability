@@ -25,14 +25,7 @@ public class ScorePlayer {
     }
 
     public AtomicInteger getNumberOfGamesWonsByPlayerForCurrentSet(int currentSet) {
-        AtomicInteger atomicInteger= null;
-        try {
-             atomicInteger = numberGamesWonByPlayerBySet.get(currentSet - 1);
-        } catch(IndexOutOfBoundsException e) {
-            System.out.println(currentSet);
-            e.printStackTrace();
-        }
-        return atomicInteger;
+        return numberGamesWonByPlayerBySet.get(currentSet-1);
     }
 
 }
