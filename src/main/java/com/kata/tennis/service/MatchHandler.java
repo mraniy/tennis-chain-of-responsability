@@ -38,7 +38,6 @@ public class MatchHandler extends UnitScoreHandler {
 
 
     private void setWinner(Player player, Match match1) {
-
         match1.setWinner(Optional.of(player.getName()));
     }
 

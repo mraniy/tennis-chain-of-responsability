@@ -19,13 +19,17 @@ public class TieBreakHandler extends UnitScoreHandler implements IGameHandler {
     @Override
     public void refreshScore(Match match, Player player) {
         if (itsATieBreak(match)) {
+            addPointsRelatedToTieBreak(match);
             boolean hasSomePlayerWonTheGame = incrementGamesIfSomePlayerWinsTheGame(match, player, LIMITTOWINTOGAME);
-            GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer1 = match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
-            currentGamesAndMaybeTieBreakPointsWonByPlayer1.setTieBreakPoints(Optional.of(new AtomicInteger(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer())));
-            GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer2 = match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
-            currentGamesAndMaybeTieBreakPointsWonByPlayer2.setTieBreakPoints(Optional.of(new AtomicInteger(match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer())));
             if(hasSomePlayerWonTheGame) setPointsToZero(match);
         }
+    }
+
+    public void addPointsRelatedToTieBreak(Match match) {
+        GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer1 = match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
+        currentGamesAndMaybeTieBreakPointsWonByPlayer1.setTieBreakPoints(Optional.of(new AtomicInteger(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer())));
+        GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer2 = match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
+        currentGamesAndMaybeTieBreakPointsWonByPlayer2.setTieBreakPoints(Optional.of(new AtomicInteger(match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer())));
     }
 
 
