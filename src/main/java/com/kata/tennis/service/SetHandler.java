@@ -1,5 +1,6 @@
 package com.kata.tennis.service;
 
+import com.kata.tennis.model.GamesAndMaybeTieBreakPoints;
 import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
 import com.kata.tennis.model.ScorePlayer;
@@ -14,8 +15,8 @@ public class SetHandler extends UnitScoreHandler {
 
     private void incrementSetNumberAndAddNewSet(Match match) {
         match.setSetNumber(new AtomicInteger(match.getSetNumber()).incrementAndGet());
-        match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().add(new AtomicInteger(0));
-        match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().add(new AtomicInteger(0));
+        match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().add(new GamesAndMaybeTieBreakPoints(new AtomicInteger(0),Optional.empty()));
+        match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().add(new GamesAndMaybeTieBreakPoints(new AtomicInteger(0),Optional.empty()));
     }
 
     @Override

@@ -12,7 +12,8 @@ import com.kata.tennis.service.UnitScoreHandler;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.kata.tennis.util.StringUtils.getLineOfScoreByPlayer;
-import static com.kata.tennis.util.StringUtils.retrieveUnitsOfGameWonBySomePlayer;
+import static com.kata.tennis.util.StringUtils.retrieveUnitsOfGamesWonBySomePlayer;
+import static com.kata.tennis.util.StringUtils.retrieveUnitsOfSetsWonBySomePlayer;
 
 public class Main {
 
@@ -33,10 +34,10 @@ public class Main {
     }
 
     private static void displayScore(ScoreDisplayed scoreDisplayed, Player federer, Player nadal) {
-        String player1Games = retrieveUnitsOfGameWonBySomePlayer(scoreDisplayed.getGamesWonByPlayer1());
-        String player1Sets = retrieveUnitsOfGameWonBySomePlayer(scoreDisplayed.getSetsWonByPlayer1());
-        String player2Games = retrieveUnitsOfGameWonBySomePlayer(scoreDisplayed.getGamesWonByPlayer2());
-        String player2Sets = retrieveUnitsOfGameWonBySomePlayer(scoreDisplayed.getSetsWonByPlayer2());
+        String player1Games = retrieveUnitsOfGamesWonBySomePlayer(scoreDisplayed.getGamesWonByPlayer1());
+        String player1Sets = retrieveUnitsOfSetsWonBySomePlayer(scoreDisplayed.getSetsWonByPlayer1());
+        String player2Games = retrieveUnitsOfGamesWonBySomePlayer(scoreDisplayed.getGamesWonByPlayer2());
+        String player2Sets = retrieveUnitsOfSetsWonBySomePlayer(scoreDisplayed.getSetsWonByPlayer2());
         String strFederer = getLineOfScoreByPlayer(scoreDisplayed.getPointsWonByPlayer1(), federer, player1Games, player1Sets);
         String strNadal = getLineOfScoreByPlayer(scoreDisplayed.getPointsWonByPlayer2(), nadal, player2Games, player2Sets);
         showScoreOfPlayers(strFederer, strNadal);

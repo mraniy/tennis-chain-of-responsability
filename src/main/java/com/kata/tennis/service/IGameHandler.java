@@ -11,28 +11,26 @@ public interface IGameHandler {
                 && match.getScore().getScorePlayer2().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6;
     }
 
-    default void incrementGamesIfSomePlayerWinsTheMatch(Match match, Player player,int limitToWinToGame) {
-
-        if(match.getPlayer2().getName().equals(player.getName()) &&
+    default boolean incrementGamesIfSomePlayerWinsTheGame(Match match, Player player, int limitToWinToGame) {
+        if (match.getPlayer2().getName().equals(player.getName()) &&
                 gameWonBySomePlayer(match.getScore().getScorePlayer2(), match.getScore().getScorePlayer1(), limitToWinToGame)) {
-            incrementGameAndInitPoints(match, match.getScore().getScorePlayer2());
-        }
-
-        else if(match.getPlayer1().getName().equals(player.getName()) &&
+            incrementGame(match.getScore().getScorePlayer2());
+            return true;
+        } else if (match.getPlayer1().getName().equals(player.getName()) &&
                 gameWonBySomePlayer(match.getScore().getScorePlayer1(), match.getScore().getScorePlayer2(), limitToWinToGame)) {
-            incrementGameAndInitPoints(match, match.getScore().getScorePlayer1());
+            incrementGame(match.getScore().getScorePlayer1());
+            return true;
         }
-
+        return false;
     }
 
-    default void incrementGameAndInitPoints(Match match, ScorePlayer scorePlayer) {
+    default void incrementGame(ScorePlayer scorePlayer) {
         incrementTheRightGameOfSet(scorePlayer);
-        setPointsToZero(match);
     }
 
 
     default void incrementTheRightGameOfSet(ScorePlayer scorePlayer) {
-        scorePlayer.getNumberGamesWonByPlayerBySet().getLast().incrementAndGet();
+        scorePlayer.getNumberGamesWonByPlayerBySet().getLast().getGames().incrementAndGet();
     }
 
     default void setPointsToZero(Match match) {
@@ -44,8 +42,6 @@ public interface IGameHandler {
         return scorePlayer1.getNumberPointsOfGameWonByPlayer() >= limitToWinToGame
                 && scorePlayer1.getNumberPointsOfGameWonByPlayer() >= scorePlayer2.getNumberPointsOfGameWonByPlayer() + 2;
     }
-
-
 
 
 }

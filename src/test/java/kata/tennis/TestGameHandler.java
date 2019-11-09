@@ -34,7 +34,7 @@ public class TestGameHandler {
         UnitScoreHandler gameHandler = new GameHandler();
         gameHandler.refreshScore(match, nadal);
         // then
-        assertThat(match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().get(0).get(), is(3));
+        assertThat(match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().get(0).getGames().get(), is(3));
         assertThat(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(0));
         assertThat(match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer(), is(0));
     }
@@ -56,7 +56,7 @@ public class TestGameHandler {
         UnitScoreHandler gameHandler = new GameHandler();
         gameHandler.refreshScore(match, federer);
         // then
-        assertThat(match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().get(0).get(), is(5));
+        assertThat(match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().get(0).getGames().get(), is(5));
         assertThat(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer(), is(0));
         assertThat(match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer(), is(0));
     }

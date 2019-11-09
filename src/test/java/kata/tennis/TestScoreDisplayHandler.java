@@ -27,8 +27,8 @@ public class TestScoreDisplayHandler {
         ScoreDisplayHandler scoreDisplayHandler = new ScoreDisplayHandler();
         ScoreDisplayed scoreDisplayed = scoreDisplayHandler.show(match);
         // then
-        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).get(), is(4));
-        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).get(), is(3));
+        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).getGames().get(), is(4));
+        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).getGames().get(), is(3));
         assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.ADVANTAGE.getScore()));
         assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FORTY.getScore()));
     }
@@ -47,8 +47,8 @@ public class TestScoreDisplayHandler {
         ScoreDisplayHandler scoreDisplayHandler = new ScoreDisplayHandler();
         ScoreDisplayed scoreDisplayed = scoreDisplayHandler.show(match);
         // then
-        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).get(), is(4));
-        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).get(), is(3));
+        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).getGames().get(), is(4));
+        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).getGames().get(), is(3));
         assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.FORTY.getScore()));
         assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FORTY.getScore()));
     }
@@ -67,8 +67,8 @@ public class TestScoreDisplayHandler {
         ScoreDisplayHandler scoreDisplayHandler = new ScoreDisplayHandler();
         ScoreDisplayed scoreDisplayed = scoreDisplayHandler.show(match);
         // then
-        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).get(), is(4));
-        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).get(), is(3));
+        assertThat(scoreDisplayed.getGamesWonByPlayer1().get(0).getGames().get(), is(4));
+        assertThat(scoreDisplayed.getGamesWonByPlayer2().get(0).getGames().get(), is(3));
         assertThat(scoreDisplayed.getPointsWonByPlayer1(), is(EnumPoint.FORTY.getScore()));
         assertThat(scoreDisplayed.getPointsWonByPlayer2(), is(EnumPoint.FIFTEEN.getScore()));
     }

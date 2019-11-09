@@ -1,5 +1,6 @@
 package com.kata.tennis.util;
 
+import com.kata.tennis.model.GamesAndMaybeTieBreakPoints;
 import com.kata.tennis.model.Player;
 
 import java.util.LinkedList;
@@ -23,9 +24,23 @@ public class StringUtils {
         return nameCompletedBySpaces.toString();
     }
 
-    public static String retrieveUnitsOfGameWonBySomePlayer(LinkedList<AtomicInteger> gamesWonByPlayer) {
+    public static String retrieveUnitsOfSetsWonBySomePlayer(LinkedList<AtomicInteger> gamesWonByPlayer) {
         return gamesWonByPlayer.stream()
                 .map(integer -> String.valueOf(integer.get()))
                 .collect(Collectors.joining(" "));
+    }
+
+    public static String retrieveUnitsOfGamesWonBySomePlayer(LinkedList<GamesAndMaybeTieBreakPoints> gamesWonByPlayer) {
+        return gamesWonByPlayer.stream()
+                .map(gamesAndMaybeTieBreakPoints -> {
+                    String tieBreakPoints = gamesAndMaybeTieBreakPoints.getTieBreakPoints().map(atomicInteger -> String.valueOf(atomicInteger.get())).orElseGet(() -> "");
+                    int intGames = gamesAndMaybeTieBreakPoints.getGames().get();
+                    StringBuffer games = new StringBuffer(String.valueOf(intGames));
+                    if(!tieBreakPoints.isEmpty()) {
+                        games.append("(").append(tieBreakPoints).append(")");
+                    }
+                    return games.toString();
+                }).collect(Collectors.joining(" "));
+
     }
 }

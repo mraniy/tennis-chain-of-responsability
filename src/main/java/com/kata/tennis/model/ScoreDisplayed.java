@@ -9,9 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Data
 public class ScoreDisplayed {
 
-    private LinkedList<AtomicInteger> gamesWonByPlayer1;
+    private LinkedList<GamesAndMaybeTieBreakPoints> gamesWonByPlayer1;
 
-    private LinkedList<AtomicInteger> gamesWonByPlayer2;
+    private LinkedList<GamesAndMaybeTieBreakPoints> gamesWonByPlayer2;
 
     private LinkedList<AtomicInteger> setsWonByPlayer1;
 
@@ -20,5 +20,6 @@ public class ScoreDisplayed {
     private String pointsWonByPlayer1;
 
     private String pointsWonByPlayer2;
+
 
 }
