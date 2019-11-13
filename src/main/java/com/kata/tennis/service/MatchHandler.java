@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MatchHandler extends UnitScoreHandler {
 
-    private final int NUMBER_OF_SETS_TO_WIN_THE_TIE = 3;
+    private final int NUMBER_OF_SETS_TO_WIN_THE_TIE = 2;
 
     public MatchHandler() {
         next = Optional.empty();
