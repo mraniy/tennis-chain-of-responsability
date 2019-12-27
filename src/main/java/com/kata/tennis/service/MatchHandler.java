@@ -4,7 +4,6 @@ import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MatchHandler extends UnitScoreHandler {
 
@@ -16,25 +15,23 @@ public class MatchHandler extends UnitScoreHandler {
 
     @Override
     public void refreshScore(Match match, Player player) {
-        if(hasPlayer2WonTheMatch(match, player) || hasPlayer1WonTheMatch(match, player)) {
+        if(hasPlayerWonTheMatch(player)) {
             setWinner(player,match);
             removeLastSetAddedAndDecrementSetNumber(match);
         }
     }
 
     public void removeLastSetAddedAndDecrementSetNumber(Match match) {
-        match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().removeLast();
-        match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().removeLast();
-        match.setSetNumber(new AtomicInteger(match.getSetNumber()).decrementAndGet());
+        match.getPlayer1().getScorePlayer().getNumberGamesWonByPlayerBySet().removeLast();
+        match.getPlayer2().getScorePlayer().getNumberGamesWonByPlayerBySet().removeLast();
+        match.setSetNumber(match.getSetNumber()-1);
     }
 
-    private boolean hasPlayer1WonTheMatch(Match match, Player player) {
-        return match.getPlayer1().getName().equals(player.getName()) && match.getScore().getScorePlayer1().getNumberSetWonByPlayer() == NUMBER_OF_SETS_TO_WIN_THE_TIE;
+    private boolean hasPlayerWonTheMatch(Player player) {
+        return player.getScorePlayer().getNumberSetWonByPlayer() == NUMBER_OF_SETS_TO_WIN_THE_TIE;
     }
 
-    private boolean hasPlayer2WonTheMatch(Match match, Player player) {
-        return match.getPlayer2().getName().equals(player.getName()) && match.getScore().getScorePlayer2().getNumberSetWonByPlayer() == NUMBER_OF_SETS_TO_WIN_THE_TIE;
-    }
+
 
 
     private void setWinner(Player player, Match match1) {

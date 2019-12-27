@@ -7,35 +7,29 @@ import com.kata.tennis.model.ScorePlayer;
 public interface IGameHandler {
 
     default boolean itsATieBreak(Match match) {
-        return match.getScore().getScorePlayer1().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6
-                && match.getScore().getScorePlayer2().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6;
+        int gamesWonByPlayer1 = match.getPlayer1().getScorePlayer().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber());
+        int gamesWonByPlayer2 = match.getPlayer2().getScorePlayer().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber());
+        return gamesWonByPlayer1 == 6 && gamesWonByPlayer2 == 6;
     }
 
     default boolean incrementGamesIfSomePlayerWinsTheGame(Match match, Player player, int limitToWinToGame) {
-        if (match.getPlayer2().getName().equals(player.getName()) &&
-                gameWonBySomePlayer(match.getScore().getScorePlayer2(), match.getScore().getScorePlayer1(), limitToWinToGame)) {
-            incrementGame(match.getScore().getScorePlayer2());
-            return true;
-        } else if (match.getPlayer1().getName().equals(player.getName()) &&
-                gameWonBySomePlayer(match.getScore().getScorePlayer1(), match.getScore().getScorePlayer2(), limitToWinToGame)) {
-            incrementGame(match.getScore().getScorePlayer1());
+        boolean gameWonByPlayer1 = gameWonBySomePlayer(match.getPlayer2().getScorePlayer(), match.getPlayer1().getScorePlayer(), limitToWinToGame);
+        boolean gameWonByPlayer2 = gameWonBySomePlayer(match.getPlayer1().getScorePlayer(), match.getPlayer2().getScorePlayer(), limitToWinToGame);
+        if (gameWonByPlayer1 || gameWonByPlayer2) {
+            incrementGame(player.getScorePlayer());
             return true;
         }
         return false;
     }
 
     default void incrementGame(ScorePlayer scorePlayer) {
-        incrementTheRightGameOfSet(scorePlayer);
-    }
-
-
-    default void incrementTheRightGameOfSet(ScorePlayer scorePlayer) {
-        scorePlayer.getNumberGamesWonByPlayerBySet().getLast().getGames().incrementAndGet();
+        Integer games = scorePlayer.getNumberGamesWonByPlayerBySet().getLast().getGames();
+        scorePlayer.getNumberGamesWonByPlayerBySet().getLast().setGames(games+1);
     }
 
     default void setPointsToZero(Match match) {
-        match.getScore().getScorePlayer1().setNumberPointsOfGameWonByPlayer(0);
-        match.getScore().getScorePlayer2().setNumberPointsOfGameWonByPlayer(0);
+        match.getPlayer1().getScorePlayer().setNumberPointsOfGameWonByPlayer(0);
+        match.getPlayer2().getScorePlayer().setNumberPointsOfGameWonByPlayer(0);
     }
 
     default boolean gameWonBySomePlayer(ScorePlayer scorePlayer1, ScorePlayer scorePlayer2, int limitToWinToGame) {

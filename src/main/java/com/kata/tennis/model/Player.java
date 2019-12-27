@@ -10,5 +10,7 @@ public class Player {
 
     private String name;
 
+    private ScorePlayer scorePlayer;
+
 
 }

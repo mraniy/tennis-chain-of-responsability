@@ -2,14 +2,12 @@ package kata.tennis;
 
 import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
-import com.kata.tennis.model.Score;
 import com.kata.tennis.model.ScorePlayer;
 import com.kata.tennis.service.PointHander;
 import com.kata.tennis.service.UnitScoreHandler;
 import org.junit.Test;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static kata.tennis.DataFactory.aScore;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,18 +21,16 @@ public class TestUnitScoreHandler {
     @Test
     public void should_determine_match_winner_correctly() {
         // given
-        Player federer = new Player("Federer");
-        Player nadal = new Player("Nadal");
+        ScorePlayer scoreFederer = aScore(3, 1, 5);
+        ScorePlayer scoreNadal = aScore(2, 1, 4);
 
+        Player federer = new Player("Federer",scoreFederer);
+        Player nadal = new Player("Nadal",scoreNadal);
 
-        ScorePlayer scoreFederer = aScore(3, 1, new AtomicInteger(5));
-        ScorePlayer scoreNadal = aScore(2, 1, new AtomicInteger(4));
-
-        Score score = new Score(scoreFederer, scoreNadal);
-        Match match = new Match(federer, nadal, score);
+        Match match = new Match(federer, nadal);
         // when
 
-        pointHandler.proceed(match, "Federer");
+        pointHandler.proceed(match, federer);
         // then
         assertThat(match.getWinner() , is(Optional.of("Federer")));
     }
@@ -42,18 +38,15 @@ public class TestUnitScoreHandler {
     @Test
     public void should_determine_set_winner_correctly() {
         // given
-        Player federer = new Player("Federer");
-        Player nadal = new Player("Nadal");
-
-        ScorePlayer scoreFederer = aScore(7, 0, new AtomicInteger(4));
-        ScorePlayer scoreNadal = aScore(8, 0, new AtomicInteger(5));
-
-        Score score = new Score(scoreFederer, scoreNadal);
-        Match match = new Match(federer, nadal, score);
+        ScorePlayer scoreFederer = aScore(7, 0, 4);
+        ScorePlayer scoreNadal = aScore(8, 0, 5);
+        Player federer = new Player("Federer",scoreFederer);
+        Player nadal = new Player("Nadal",scoreNadal);
+        Match match = new Match(federer, nadal);
         // when
 
-        pointHandler.proceed(match, "Nadal");
+        pointHandler.proceed(match, nadal);
         // then
-        assertThat(match.getScore().getScorePlayer2().getNumberSetWonByPlayer() , is(1));
+        assertThat(match.getPlayer2().getScorePlayer().getNumberSetWonByPlayer() , is(1));
     }
 }

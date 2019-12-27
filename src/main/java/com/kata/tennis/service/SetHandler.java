@@ -6,7 +6,6 @@ import com.kata.tennis.model.Player;
 import com.kata.tennis.model.ScorePlayer;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class SetHandler extends UnitScoreHandler {
     public SetHandler() {
@@ -14,21 +13,20 @@ public class SetHandler extends UnitScoreHandler {
     }
 
     private void incrementSetNumberAndAddNewSet(Match match) {
-        match.setSetNumber(new AtomicInteger(match.getSetNumber()).incrementAndGet());
-        match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().add(new GamesAndMaybeTieBreakPoints(new AtomicInteger(0),Optional.empty()));
-        match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().add(new GamesAndMaybeTieBreakPoints(new AtomicInteger(0),Optional.empty()));
+        match.setSetNumber(match.getSetNumber()+1);
+        match.getPlayer1().getScorePlayer().getNumberGamesWonByPlayerBySet().add(new GamesAndMaybeTieBreakPoints(0,Optional.empty()));
+        match.getPlayer2().getScorePlayer().getNumberGamesWonByPlayerBySet().add(new GamesAndMaybeTieBreakPoints(0,Optional.empty()));
     }
 
     @Override
     public void refreshScore(Match match, Player player) {
-        handleSetWinner(match, player, match.getPlayer1(), match.getScore().getScorePlayer1(), match.getScore().getScorePlayer2());
-        handleSetWinner(match, player, match.getPlayer2(), match.getScore().getScorePlayer2(), match.getScore().getScorePlayer1());
+        handleSetWinner(match, match.getPlayer1().getScorePlayer(), match.getPlayer2().getScorePlayer());
+        handleSetWinner(match, match.getPlayer2().getScorePlayer(), match.getPlayer1().getScorePlayer());
     }
 
-    public void handleSetWinner(Match match, Player player1, Player player, ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
-        if (player.getName().equals(player1.getName()) &&
-                hasPlayerWonSet(match, scorePlayer1, scorePlayer2)) {
-            scorePlayer1.setNumberSetWonByPlayer(new AtomicInteger(scorePlayer1.getNumberSetWonByPlayer()).incrementAndGet());
+    public void handleSetWinner(Match match, ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
+        if (hasPlayerWonSet(match, scorePlayer1, scorePlayer2)) {
+            scorePlayer1.setNumberSetWonByPlayer(scorePlayer1.getNumberSetWonByPlayer()+1);
             incrementSetNumberAndAddNewSet(match);
         }
     }
@@ -40,8 +38,8 @@ public class SetHandler extends UnitScoreHandler {
     }
 
     private boolean hasPlayer1WonUsualSet(Match match, ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
-        int numberGamesWonByPlayer1 = scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get();
-        int numberGamesWonByPlayer2 = scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get();
+        int numberGamesWonByPlayer1 = scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber());
+        int numberGamesWonByPlayer2 = scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber());
         int differenceOfPointsBetweenPlayer1AndPlayer2 = numberGamesWonByPlayer1 - numberGamesWonByPlayer2;
         if ((numberGamesWonByPlayer1 == 6 || numberGamesWonByPlayer1 == 7)
                 && differenceOfPointsBetweenPlayer1AndPlayer2 >= 2)
@@ -50,8 +48,8 @@ public class SetHandler extends UnitScoreHandler {
     }
 
     private boolean hasPlayer1WonTieBreak(Match match , ScorePlayer scorePlayer1, ScorePlayer scorePlayer2) {
-        return scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 7
-                && scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6;
+        return scorePlayer1.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()) == 7
+                && scorePlayer2.getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()) == 6;
     }
 
 

@@ -2,14 +2,13 @@ package com.kata.tennis.main;
 
 import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
-import com.kata.tennis.model.Score;
 import com.kata.tennis.model.ScorePlayer;
 import com.kata.tennis.service.PointHander;
 import com.kata.tennis.service.ScoreDisplayHandler;
 import com.kata.tennis.model.ScoreDisplayed;
 import com.kata.tennis.service.UnitScoreHandler;
 
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 import static com.kata.tennis.util.StringUtils.getLineOfScoreByPlayer;
 import static com.kata.tennis.util.StringUtils.retrieveUnitsOfGamesWonBySomePlayer;
@@ -21,11 +20,11 @@ public class Main {
     static ScoreDisplayHandler displayHandler = new ScoreDisplayHandler();
 
     public static void main(String[] args) {
-        AtomicInteger numberOfPointsPlayed = new AtomicInteger();
-        Player federer = new Player("Federer");
-        Player nadal = new Player("Nadal");
-        Match match = new Match(federer, nadal, new Score(new ScorePlayer(), new ScorePlayer()));
-        for (;!match.getWinner().isPresent(); numberOfPointsPlayed.incrementAndGet()) {
+        Integer numberOfPointsPlayed = 0;
+        Player federer = new Player("Federer", new ScorePlayer());
+        Player nadal = new Player("Nadal", new ScorePlayer());
+        Match match = new Match(federer, nadal);
+        for (;!match.getWinner().isPresent(); numberOfPointsPlayed++ ) {
             generatePointAndGiveItToRandomPlayer(match);
             ScoreDisplayed scoreDisplayed = displayHandler.show(match);
             displayScore(scoreDisplayed, federer, nadal);
@@ -54,10 +53,10 @@ public class Main {
         long randomwinner = Math.round(Math.random());
         switch (String.valueOf(randomwinner)) {
             case "0":
-                pointHandler.proceed(match, "Federer");
+                pointHandler.proceed(match, match.getPlayer1());
                 break;
             default:
-                pointHandler.proceed(match, "Nadal");
+                pointHandler.proceed(match, match.getPlayer2());
                 break;
         }
     }

@@ -3,9 +3,7 @@ package com.kata.tennis.service;
 import com.kata.tennis.model.GamesAndMaybeTieBreakPoints;
 import com.kata.tennis.model.Match;
 import com.kata.tennis.model.Player;
-
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class TieBreakHandler extends UnitScoreHandler implements IGameHandler {
 
@@ -25,11 +23,11 @@ public class TieBreakHandler extends UnitScoreHandler implements IGameHandler {
         }
     }
 
-    public void addPointsRelatedToTieBreak(Match match) {
-        GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer1 = match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
-        currentGamesAndMaybeTieBreakPointsWonByPlayer1.setTieBreakPoints(Optional.of(new AtomicInteger(match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer())));
-        GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer2 = match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
-        currentGamesAndMaybeTieBreakPointsWonByPlayer2.setTieBreakPoints(Optional.of(new AtomicInteger(match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer())));
+    private void addPointsRelatedToTieBreak(Match match) {
+        GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer1 = match.getPlayer1().getScorePlayer().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
+        GamesAndMaybeTieBreakPoints currentGamesAndMaybeTieBreakPointsWonByPlayer2 = match.getPlayer2().getScorePlayer().getNumberGamesWonByPlayerBySet().get(match.getSetNumber() - 1);
+        currentGamesAndMaybeTieBreakPointsWonByPlayer1.setTieBreakPoints(Optional.of(match.getPlayer1().getScorePlayer().getNumberPointsOfGameWonByPlayer()));
+        currentGamesAndMaybeTieBreakPointsWonByPlayer2.setTieBreakPoints(Optional.of(match.getPlayer2().getScorePlayer().getNumberPointsOfGameWonByPlayer()));
     }
 
 

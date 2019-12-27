@@ -13,12 +13,8 @@ public abstract class UnitScoreHandler {
 
     public abstract void refreshScore(Match match, Player player);
 
-    public void proceed(Match match, String pointWinner) {
-        if (pointWinner.equals(match.getPlayer1().getName()))
-            refreshScore(match, match.getPlayer1());
-        else {
-            refreshScore(match, match.getPlayer2());
-        }
+    public void proceed(Match match, Player pointWinner) {
+        refreshScore(match, pointWinner);
         next.ifPresent(unitScoreHandler -> unitScoreHandler.proceed(match,pointWinner));
     }
 }

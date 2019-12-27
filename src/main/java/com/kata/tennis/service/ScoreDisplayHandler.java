@@ -6,7 +6,6 @@ import com.kata.tennis.model.ScoreDisplayed;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ScoreDisplayHandler {
 
@@ -19,8 +18,8 @@ public class ScoreDisplayHandler {
     }
 
     private void updateScorePointsDisplayed(Match match, ScoreDisplayed scoreDisplayed) {
-        int numberPointsOfGameWonByPlayer1 = match.getScore().getScorePlayer1().getNumberPointsOfGameWonByPlayer();
-        int numberPointsOfGameWonByPlayer2 = match.getScore().getScorePlayer2().getNumberPointsOfGameWonByPlayer();
+        int numberPointsOfGameWonByPlayer1 = match.getPlayer1().getScorePlayer().getNumberPointsOfGameWonByPlayer();
+        int numberPointsOfGameWonByPlayer2 = match.getPlayer2().getScorePlayer().getNumberPointsOfGameWonByPlayer();
         if(isTieBreak(match)) {
             updateScorePointsDisplayed(scoreDisplayed, String.valueOf(numberPointsOfGameWonByPlayer1), String.valueOf(numberPointsOfGameWonByPlayer2));
         }
@@ -36,20 +35,20 @@ public class ScoreDisplayHandler {
     }
 
     private boolean isTieBreak(Match match) {
-        return match.getScore().getScorePlayer1().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get() == 6
-                && match.getScore().getScorePlayer2().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()).get()== 6;
+        return match.getPlayer1().getScorePlayer().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber()) == 6
+                && match.getPlayer2().getScorePlayer().getNumberOfGamesWonsByPlayerForCurrentSet(match.getSetNumber())== 6;
     }
 
     private void updateScoreGamesDisplayed(Match match, ScoreDisplayed scoreDisplayed) {
-        scoreDisplayed.setGamesWonByPlayer1(match.getScore().getScorePlayer1().getNumberGamesWonByPlayerBySet());
-        scoreDisplayed.setGamesWonByPlayer2(match.getScore().getScorePlayer2().getNumberGamesWonByPlayerBySet());
+        scoreDisplayed.setGamesWonByPlayer1(match.getPlayer1().getScorePlayer().getNumberGamesWonByPlayerBySet());
+        scoreDisplayed.setGamesWonByPlayer2(match.getPlayer2().getScorePlayer().getNumberGamesWonByPlayerBySet());
     }
 
     private void updateScoreSetsDisplayed(Match match, ScoreDisplayed scoreDisplayed) {
-        int numberSetWonByPlayer1 = match.getScore().getScorePlayer1().getNumberSetWonByPlayer();
-        int numberSetWonByPlayer2 = match.getScore().getScorePlayer2().getNumberSetWonByPlayer();
-        scoreDisplayed.setSetsWonByPlayer1(new LinkedList(Arrays.asList(new AtomicInteger(numberSetWonByPlayer1))));
-        scoreDisplayed.setSetsWonByPlayer2(new LinkedList(Arrays.asList(new AtomicInteger(numberSetWonByPlayer2))));
+        int numberSetWonByPlayer1 = match.getPlayer1().getScorePlayer().getNumberSetWonByPlayer();
+        int numberSetWonByPlayer2 = match.getPlayer2().getScorePlayer().getNumberSetWonByPlayer();
+        scoreDisplayed.setSetsWonByPlayer1(new LinkedList(Arrays.asList(numberSetWonByPlayer1)));
+        scoreDisplayed.setSetsWonByPlayer2(new LinkedList(Arrays.asList(numberSetWonByPlayer2)));
     }
 
 
